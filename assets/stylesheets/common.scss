@@ -1,0 +1,14 @@
+.type-topic-input {
+    display: flex;
+    margin-bottom: 8px;
+  
+    details {
+      flex-grow: 1;
+    }
+    
+    .select-kit-header {
+      color: var(--primary-high);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
