@@ -1,0 +1,20 @@
+{{#if this.showNotificationPromptBanner}}
+  <div class="row">
+    <div class="consent_banner alert alert-info">
+      <span>
+        {{i18n "discourse_private_topic.notification_private_topic"}}
+        <DButton
+          @display="link"
+          @action={{action "publish"}}
+          @label="discourse_private_topic.publish_it_now"
+        />
+      </span>
+      <DButton
+        @icon="times"
+        @action={{action "dismiss"}}
+        @class="btn btn-flat close"
+        @title="banner.close"
+      />
+    </div>
+  </div>
+{{/if}}
