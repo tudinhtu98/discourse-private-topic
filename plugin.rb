@@ -88,6 +88,14 @@ after_initialize do
         end
     end
 
+    module PrivateTopicsCreator
+        def setup_topic_params
+            topic_params = super
+            topic_params[:is_private] = @opts[:is_private]
+            topic_params
+        end
+    end
+
     # this removes the categories from the "recent topics" shown on the 404 page
     # called from ApplicationController.build_not_found_page
     # this is cached without a user so just pass nil and exclude every private category
@@ -111,10 +119,18 @@ after_initialize do
         prepend PrivateTopicsPatchUserSummary
     end
 
+    class ::TopicCreator
+        prepend PrivateTopicsCreator
+    end
+
     TopicQuery.add_custom_filter(:private_topics) do |result, query|
         if SiteSetting.discourse_private_topic_enabled && !query&.guardian&.user&.staff?
             result = result.where(is_private: false).or(result.where(is_private: true, user_id: query&.guardian&.user&.id))
         end
         result
+    end
+
+    if SiteSetting.discourse_private_topic_enabled
+        add_permitted_post_create_param(:is_private)
     end
 end
