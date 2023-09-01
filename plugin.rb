@@ -16,4 +16,11 @@ after_initialize do
         # Remove route if not in use
         # get '/name' => 'discourse_private_topic#index'
     end
+
+    TopicQuery.add_custom_filter(:private_topics) do |result, query|
+        if SiteSetting.discourse_private_topic_enabled && !query&.guardian&.user&.staff?
+            result = result.where(is_private: false).or(result.where(is_private: true, user_id: query&.guardian&.user&.id))
+        end
+        result
+    end
 end
