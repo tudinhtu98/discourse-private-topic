@@ -98,6 +98,16 @@ after_initialize do
         end
     end
 
+    module PrivateTopicsSuggestedOrdering
+        def suggested_ordering(result, options)
+            if !guardian&.user&.staff?
+                super.where("topics.is_private=false")    
+            else
+                super
+            end
+        end
+    end
+
     class ::Search
         prepend PrivateTopicsPatchSearch
     end
@@ -108,6 +118,10 @@ after_initialize do
 
     class ::TopicCreator
         prepend PrivateTopicsCreator
+    end
+
+    class ::TopicQuery
+        prepend PrivateTopicsSuggestedOrdering
     end
 
     TopicQuery.add_custom_filter(:private_topics) do |result, query|
@@ -136,10 +150,10 @@ after_initialize do
             singleton_class.prepend PrivateTopicsPatch404
         end
 
-        class ::TopicQuery
+        class ::TopicTrackingState
             module PrivateTopicsListNew
-                def new_filter(list, treat_as_new_topic_start_date: nil, treat_as_new_topic_clause_sql: nil)
-                    super.where("topics.is_private=false")
+                def new_filter_sql
+                    super + " AND topics.is_private=false"
                 end
             end
             singleton_class.prepend PrivateTopicsListNew
