@@ -98,21 +98,6 @@ after_initialize do
         end
     end
 
-    # this removes the categories from the "recent topics" shown on the 404 page
-    # called from ApplicationController.build_not_found_page
-    # this is cached without a user so just pass nil and exclude every private category
-    class ::Topic
-        def self.recent(max = 10)
-            if SiteSetting.discourse_private_topic_enabled
-                Topic.listable_topics.visible.secured
-                    .where("(topics.is_private=false)")
-                    .order("created_at desc").limit(max)
-            else
-                super
-            end
-        end
-    end
-
     class ::Search
         prepend PrivateTopicsPatchSearch
     end
@@ -133,6 +118,37 @@ after_initialize do
     end
 
     if SiteSetting.discourse_private_topic_enabled
+        # this removes the categories from the "recent topics" shown on the 404 page
+        # called from ApplicationController.build_not_found_page
+        # this is cached without a user so just pass nil and exclude every private category
+        class ::Topic
+            module PrivateTopicsPatch404
+                def recent(max = 10)
+                    if SiteSetting.discourse_private_topic_enabled
+                        Topic.listable_topics.visible.secured
+                            .where("(topics.is_private=false)")
+                            .order("created_at desc").limit(max)
+                    else
+                        super
+                    end
+                end
+            end
+            singleton_class.prepend PrivateTopicsPatch404
+        end
+
+        class ::TopicQuery
+            module PrivateTopicsListNew
+                def new_filter(list, treat_as_new_topic_start_date: nil, treat_as_new_topic_clause_sql: nil)
+                    super.where("topics.is_private=false")
+                end
+            end
+            singleton_class.prepend PrivateTopicsListNew
+        end
+
         add_permitted_post_create_param(:is_private)
+
+        add_to_serializer(:topic_view, :is_private, false) {
+            object.topic.is_private
+        }
     end
 end
