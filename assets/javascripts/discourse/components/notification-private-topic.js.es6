@@ -7,7 +7,7 @@ export default Component.extend({
 
   @discourseComputed("topic", "bannerDismissed")
   showNotificationPromptBanner(topic, bannerDismissed) {
-    return topic && !bannerDismissed;
+    return topic.is_private && !bannerDismissed;
   },
 
   actions: {
@@ -15,10 +15,8 @@ export default Component.extend({
       this._super(...arguments);
       ajax(`/t/${this.topic.id}/change_visibility`, {
         type: "PUT",
-        data: { is_private: true },
-      }).then((res) => {
-        console.log(`Call /t/${this.topic.id}/change_visibility`);
-        console.log("Published topic", res);
+        data: { is_private: false },
+      }).then(() => {
         this.set("bannerDismissed", true);
       });
     },
