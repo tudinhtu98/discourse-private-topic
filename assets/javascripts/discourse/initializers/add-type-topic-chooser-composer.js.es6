@@ -1,5 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import Composer from "discourse/models/composer";
+import discourseComputed from "discourse-common/utils/decorators";
 
 const PLUGIN_ID = "discourse-private-public-topic";
 
@@ -20,6 +21,11 @@ export default {
           },
         ],
         isPrivateTopic: false,
+
+        @discourseComputed("action")
+        showPrivateTopicChooser(action) {
+          return action === Composer.CREATE_TOPIC;
+        },
       });
 
       // Add field is_private in ajax body with value of isPrivateTopic when create topic
