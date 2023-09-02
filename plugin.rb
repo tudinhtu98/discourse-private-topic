@@ -146,5 +146,9 @@ after_initialize do
         end
 
         add_permitted_post_create_param(:is_private)
+
+        add_to_serializer(:topic_view, :is_private, false) {
+            object.topic.is_private
+        }
     end
 end
