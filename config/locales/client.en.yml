@@ -2,3 +2,5 @@ en:
   js:
     discourse_private_topic:
       title: 'discourse private public topic'
+      notification_private_topic: 'This is a private topic, only you and staff can see or access it.'
+      publish_it_now: 'Publish it now'
