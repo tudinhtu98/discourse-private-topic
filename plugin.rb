@@ -1,6 +1,6 @@
 # name: discourse-private-topic
 # about: Description for this plugin
-# version: 0.1.0
+# version: 1.0.0
 # authors: Tu Dinh Tu
 # url:
 
