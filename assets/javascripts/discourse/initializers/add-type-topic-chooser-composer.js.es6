@@ -20,16 +20,20 @@ export default {
             name: "Private",
           },
         ],
-        isPrivateTopic: false,
+        is_private: false,
 
-        @discourseComputed("action")
-        showPrivateTopicChooser(action) {
-          return action === Composer.CREATE_TOPIC;
+        @discourseComputed("action", "editingFirstPost")
+        showPrivateTopicChooser(action, editingFirstPost) {
+          // return [Composer.CREATE_TOPIC, Composer.EDIT].includes(action);
+          return action === Composer.CREATE_TOPIC || (action === Composer.EDIT && editingFirstPost);
         },
       });
 
-      // Add field is_private in ajax body with value of isPrivateTopic when create topic
-      Composer.serializeOnCreate("is_private", "isPrivateTopic");
+      // Add field is_private in ajax body with value of this.is_private when create topic
+      Composer.serializeOnCreate("is_private", "is_private");
+
+      // Add field is_private in ajax body with value of this.topic.is_private when edit topic
+      Composer.serializeToTopic("is_private", "topic.is_private");
     });
   },
 };
