@@ -1,0 +1,3 @@
+class VersionTag < Tag
+
+end

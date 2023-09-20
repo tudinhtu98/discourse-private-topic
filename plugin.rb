@@ -9,9 +9,14 @@ enabled_site_setting :discourse_private_topic_enabled
 register_asset 'stylesheets/common.scss'
 
 after_initialize do
-    load File.expand_path('../app/controllers/discourse_private_topic_controller.rb', __FILE__)
-    load File.expand_path('../app/controllers/topics_controller.rb', __FILE__)
-    load File.expand_path('../lib/post_reviser.rb', __FILE__)
+    if SiteSetting.discourse_private_topic_enabled
+        [
+            '../app/controllers/topics_controller.rb',
+            '../lib/post_reviser.rb',
+            '../app/models/NodeTag.rb',
+            '../app/models/VersionTag.rb'
+        ].each { |path| load File.expand_path(path, __FILE__) }
+    end
 
     Discourse::Application.routes.append do
         # Map the path `/name` to `DiscoursePPTController`’s `index` method
