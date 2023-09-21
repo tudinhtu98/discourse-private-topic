@@ -13,8 +13,10 @@ after_initialize do
         [
             '../app/controllers/topics_controller.rb',
             '../lib/post_reviser.rb',
+            '../lib/topic_creator.rb',
             '../app/models/NodeTag.rb',
-            '../app/models/VersionTag.rb'
+            '../app/models/VersionTag.rb',
+            '../app/models/Tag.rb',
         ].each { |path| load File.expand_path(path, __FILE__) }
     end
 
@@ -166,6 +168,8 @@ after_initialize do
         end
 
         add_permitted_post_create_param(:is_private)
+        add_permitted_post_create_param(:node_tags, :array)
+        add_permitted_post_create_param(:version_tags, :array)
 
         add_to_serializer(:topic_view, :is_private, false) {
             object.topic.is_private
