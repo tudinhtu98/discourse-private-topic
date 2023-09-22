@@ -17,6 +17,7 @@ after_initialize do
             '../app/models/NodeTag.rb',
             '../app/models/VersionTag.rb',
             '../app/models/Tag.rb',
+            '../app/serializers/concern/topic_tags_mixin.rb',
         ].each { |path| load File.expand_path(path, __FILE__) }
     end
 
