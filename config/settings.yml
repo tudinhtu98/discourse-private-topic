@@ -1,3 +1,9 @@
 plugins:
   discourse_private_topic_enabled:
     default: false
+  min_trust_to_create_tag_version:
+    default: "Admin"
+    enum: "TrustLevelAndStaffSetting"
+  min_trust_to_create_tag_node:
+    default: "Admin"
+    enum: "TrustLevelAndStaffSetting"
