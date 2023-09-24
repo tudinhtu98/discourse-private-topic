@@ -234,5 +234,11 @@ after_initialize do
     add_to_serializer(:topic_view, :is_private, false) {
       object.topic.is_private
     }
+    add_to_serializer(:topic_view, :node_tags, false) {
+      object.topic.tags.select { |tag| tag.type_tag=='NodeTag' }.map(&:name)
+    }
+    add_to_serializer(:topic_view, :version_tags, false) {
+      object.topic.tags.select { |tag| tag.type_tag=='VersionTag' }.map(&:name)
+    }
   end
 end
