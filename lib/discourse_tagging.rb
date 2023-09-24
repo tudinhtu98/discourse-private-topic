@@ -1,6 +1,7 @@
 module DiscourseTagging
   class << self
     alias_method :org_filter_allowed_tags, :filter_allowed_tags
+    alias_method :org_tags_for_saving, :tags_for_saving
   end
 
   def self.filter_allowed_tags(guardian, opts = {})
@@ -55,8 +56,6 @@ module DiscourseTagging
     # DIFF
     if opts[:type_tag]
       builder.where("type_tag = '#{opts[:type_tag]}'")
-    else
-      builder.where("type_tag = 'Tag'")
     end
     # ===================
 
@@ -211,5 +210,20 @@ module DiscourseTagging
     else
       result
     end
+  end
+
+  def self.tags_for_saving(tags_arg, guardian, opts = {})
+    return [] unless guardian.can_tag_topics? && tags_arg.present?
+
+    tag_names = Tag.where_name(tags_arg).pluck(:name)
+
+    if guardian.can_create_tag?
+      tag_names += (tags_arg - tag_names).map { |t| clean_tag(t) }
+      tag_names.delete_if { |t| t.blank? }
+      tag_names.uniq!
+    end
+
+    max_all_tags = SiteSetting.max_tags_per_topic + SiteSetting.try(:max_node_tags_per_topic) + SiteSetting.try(:max_version_tags_per_topic)
+    opts[:unlimited] ? tag_names : tag_names[0...max_all_tags]
   end
 end
