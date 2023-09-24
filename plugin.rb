@@ -22,6 +22,9 @@ after_initialize do
       '../app/models/Tag.rb',
       '../app/serializers/concern/topic_tags_mixin.rb',
       '../app/controllers/tags_controller.rb',
+      '../lib/guardian/tag_guardian.rb',
+      '../app/serializers/concern/site_permissions_mixin.rb',
+      '../app/serializers/site_serializer.rb'
     ].each { |path| load File.expand_path(path, __FILE__) }
   end
 
