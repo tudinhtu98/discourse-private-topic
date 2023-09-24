@@ -84,7 +84,7 @@ export default MultiSelectComponent.extend(TagsMixin, {
       data.filterForInput = true;
     }
 
-    return this.searchTags("/tags/filter/search", data, this._transformJson);
+    return this.searchTags("/version_tags/filter/search", data, this._transformJson);
   },
 
   _transformJson(context, json) {
