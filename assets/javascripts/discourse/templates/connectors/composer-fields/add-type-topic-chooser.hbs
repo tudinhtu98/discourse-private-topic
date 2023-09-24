@@ -1,10 +1,10 @@
 {{#if this.model.showPrivateTopicChooser}}
-<div class="type-topic-input">
-  {{combo-box
-  content=model.typeTopicOptions
-  value=model.is_private
-  onChange=(action (mut model.is_private))
-  class="select-type-topic"
-  }}
-</div>
+  <div class="type-topic-input">
+    {{combo-box
+      content=model.typeTopicOptions
+      value=model.is_private
+      onChange=(action (mut model.is_private))
+      class="select-type-topic"
+    }}
+  </div>
 {{/if}}
