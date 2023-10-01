@@ -17,13 +17,14 @@ after_initialize do
       '../lib/post_reviser.rb',
       '../lib/topic_creator.rb',
       '../lib/discourse_tagging.rb',
-      '../app/models/NodeTag.rb',
-      '../app/models/VersionTag.rb',
-      '../app/models/Tag.rb',
+      '../app/models/node_tag.rb',
+      '../app/models/version_tag.rb',
+      '../app/models/tag.rb',
       '../app/serializers/concern/topic_tags_mixin.rb',
       '../app/controllers/tags_controller.rb',
       '../lib/guardian/tag_guardian.rb',
       '../app/serializers/concern/site_permissions_mixin.rb',
+      '../app/serializers/concern/preloaded_tags_mixin.rb',
       '../app/serializers/site_serializer.rb'
     ].each { |path| load File.expand_path(path, __FILE__) }
   end
