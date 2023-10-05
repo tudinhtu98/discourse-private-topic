@@ -20,12 +20,18 @@ after_initialize do
       '../app/models/node_tag.rb',
       '../app/models/version_tag.rb',
       '../app/models/tag.rb',
+      '../app/models/node_tag_group.rb',
+      '../app/models/version_tag_group.rb',
+      '../app/models/tag_group.rb',
       '../app/serializers/concern/topic_tags_mixin.rb',
       '../app/controllers/tags_controller.rb',
       '../lib/guardian/tag_guardian.rb',
       '../app/serializers/concern/site_permissions_mixin.rb',
       '../app/serializers/concern/preloaded_tags_mixin.rb',
-      '../app/serializers/site_serializer.rb'
+      '../app/serializers/site_serializer.rb',
+      '../app/controllers/node_tag_groups_controller.rb',
+      '../app/controllers/tag_groups_controller.rb',
+      '../app/controllers/version_tag_groups_controller.rb'
     ].each { |path| load File.expand_path(path, __FILE__) }
   end
 
@@ -40,8 +46,8 @@ after_initialize do
       #   :constraints => {
       #     username: RouteFormat.username,
       #   }
-      # post "/upload" => "node_tags#upload"
-      # get "/unused" => "node_tags#list_unused"
+      post "/upload" => "node_tags#upload"
+      get "/unused" => "node_tags#list_unused"
       # delete "/unused" => "node_tags#destroy_unused"
   
       # constraints(tag_id: %r{[^/]+?}, format: /json|rss/) do
@@ -88,7 +94,11 @@ after_initialize do
       get "/filter/list" => "version_tags#index"
       get "/filter/search" => "version_tags#search"
       get "/list" => "version_tags#list"
+      post "/upload" => "version_tags#upload"
+      get "/unused" => "version_tags#list_unused"
     end
+    resources :node_tag_groups, constraints: StaffConstraint.new, except: [:edit]
+    resources :version_tag_groups, constraints: StaffConstraint.new, except: [:edit]
   end
 
   # hide topics from search results

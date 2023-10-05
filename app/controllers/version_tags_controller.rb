@@ -3,6 +3,10 @@ class VersionTagsController < TagsController
     VersionTag
   end
 
+  def tag_group_klass
+    VersionTagGroup
+  end
+
   def index
     core_index
   end
@@ -13,5 +17,17 @@ class VersionTagsController < TagsController
 
   def search
     core_search
+  end
+
+  def upload
+    core_upload
+  end
+
+  def list_unused
+    core_list_unused
+  end
+
+  def destroy_unused
+    core_destroy_unused
   end
 end

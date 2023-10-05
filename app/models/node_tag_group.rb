@@ -1,0 +1,3 @@
+class NodeTagGroup < TagGroup
+  
+end

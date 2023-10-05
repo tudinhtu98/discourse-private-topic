@@ -5,12 +5,20 @@ class TagsController
   alias_method :org_index, :index
   alias_method :org_list, :list
   alias_method :org_search, :search
+  alias_method :org_upload, :upload
+  alias_method :org_list_unused, :list_unused
+  alias_method :org_destroy_unused, :destroy_unused
+
   class << self
     alias_method :org_tag_counts_json, :tag_counts_json
   end
 
   def self.tag_klass
     Tag.normal
+  end
+
+  def tag_group_klass
+    TagGroup
   end
 
   def index
@@ -23,6 +31,18 @@ class TagsController
 
   def search
     core_search
+  end
+
+  def upload
+    core_upload
+  end
+
+  def list_unused
+    core_list_unused
+  end
+
+  def destroy_unused
+    core_destroy_unused
   end
 
   def core_index
@@ -203,6 +223,53 @@ class TagsController
     end
 
     render json: json_response
+  end
+
+  def core_upload
+    require "csv"
+
+    guardian.ensure_can_admin_tags!
+
+    file = params[:file] || params[:files].first
+
+    hijack do
+      begin
+        Tag.transaction do
+          CSV.foreach(file.tempfile) do |row|
+            if row.length > 2
+              raise Discourse::InvalidParameters.new(I18n.t("tags.upload_row_too_long"))
+            end
+
+            tag_name = DiscourseTagging.clean_tag(row[0])
+            tag_group_name = row[1] || nil
+
+            tag = self.class.tag_klass.find_by_name(tag_name) || self.class.tag_klass.create!(name: tag_name)
+
+            if tag_group_name
+              tag_group =
+                tag_group_klass.find_by(name: tag_group_name) || tag_group_klass.create!(name: tag_group_name)
+              tag.tag_groups << tag_group unless tag.tag_groups.include?(tag_group)
+            end
+          end
+        end
+        render json: success_json
+      rescue Discourse::InvalidParameters => e
+        render json: failed_json.merge(errors: [e.message]), status: 422
+      end
+    end
+  end
+
+  def core_list_unused
+    guardian.ensure_can_admin_tags!
+    render json: { tags: self.class.tag_klass.unused.pluck(:name) }
+  end
+
+  def core_destroy_unused
+    guardian.ensure_can_admin_tags!
+    tags = self.class.tag_klass.unused
+    StaffActionLogger.new(current_user).log_custom("deleted_unused_tags", tags: tags.pluck(:name))
+    tags.destroy_all
+    render json: success_json
   end
 
 end
