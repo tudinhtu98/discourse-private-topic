@@ -42,52 +42,9 @@ after_initialize do
       get "/filter/list" => "node_tags#index"
       get "/filter/search" => "node_tags#search"
       get "/list" => "node_tags#list"
-      # get "/personal_messages/:username" => "node_tags#personal_messages",
-      #   :constraints => {
-      #     username: RouteFormat.username,
-      #   }
       post "/upload" => "node_tags#upload"
       get "/unused" => "node_tags#list_unused"
-      # delete "/unused" => "node_tags#destroy_unused"
-  
-      # constraints(tag_id: %r{[^/]+?}, format: /json|rss/) do
-      #   scope path: "/c/*category_slug_path_with_id" do
-      #   Discourse.filters.each do |filter|
-      #     get "/none/:tag_id/l/#{filter}" => "node_tags#show_#{filter}",
-      #       :as => "tag_category_none_show_#{filter}",
-      #       :defaults => {
-      #           no_subcategories: true,
-      #       }
-      #     get "/all/:tag_id/l/#{filter}" => "node_tags#show_#{filter}",
-      #       :as => "tag_category_all_show_#{filter}",
-      #       :defaults => {
-      #         no_subcategories: false,
-      #       }
-      #   end
-
-      #   get "/none/:tag_id" => "node_tags#show",
-      #     :as => "tag_category_none_show",
-      #     :defaults => {
-      #       no_subcategories: true,
-      #     }
-      #   get "/all/:tag_id" => "node_tags#show",
-      #     :as => "tag_category_all_show",
-      #     :defaults => {
-      #       no_subcategories: false,
-      #     }
-
-      #   Discourse.filters.each do |filter|
-      #     get "/:tag_id/l/#{filter}" => "node_tags#show_#{filter}",
-      #         :as => "tag_category_show_#{filter}"
-      #   end
-
-      #   get "/:tag_id" => "node_tags#show", :as => "tag_category_show"
-      #   end
-
-      #   get "/intersection/:tag_id/*additional_tag_ids" => "node_tags#show", :as => "tag_intersection"
-      # end
-  
-      # get "*tag_id", to: redirect(relative_url_root + "tag/%{tag_id}")
+      delete "/unused" => "node_tags#destroy_unused"
     end
     scope "/version_tags" do
       get "/" => "version_tags#index"
@@ -96,6 +53,7 @@ after_initialize do
       get "/list" => "version_tags#list"
       post "/upload" => "version_tags#upload"
       get "/unused" => "version_tags#list_unused"
+      delete "/unused" => "version_tags#destroy_unused"
     end
     resources :node_tag_groups, constraints: StaffConstraint.new, except: [:edit]
     resources :version_tag_groups, constraints: StaffConstraint.new, except: [:edit]
