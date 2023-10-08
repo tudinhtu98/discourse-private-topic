@@ -1,0 +1,7 @@
+<DModalBody @title="node_tagging.upload">
+  <NodeTagsUploader
+    @refresh={{route-action "triggerRefresh"}}
+    @closeModal={{route-action "closeModal"}}
+    @id="tags-uploader"
+  />
+</DModalBody>

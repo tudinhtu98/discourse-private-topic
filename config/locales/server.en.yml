@@ -1,3 +1,5 @@
 en:
   site_settings:
     discourse_private_topic_enabled: 'Enable plugin discourse_private_topic'
+    min_trust_to_create_tag_version: 'The minimum trust level required to create a RMP Version tag.' 
+    min_trust_to_create_tag_node: 'The minimum trust level required to create a ECAT Node tag.' 

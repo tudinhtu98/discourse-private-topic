@@ -1,0 +1,3 @@
+class VersionTagGroup < TagGroup
+  
+end
