@@ -41,7 +41,10 @@ class NodeTagGroupsController < TagGroupsController
   end
 
   def make_sure_tag_created
-    params[:tag_names].concat(params[:parent_tag_name]).each do |tag|
+    node_tags = []
+    node_tags = node_tags.concat(params[:tag_names]) if params[:tag_names].present?
+    node_tags = node_tags.concat(params[:parent_tag_name]) if params[:parent_tag_name].present?
+    node_tags.each do |tag|
       NodeTag.find_or_create_by(name: tag)
     end
   end

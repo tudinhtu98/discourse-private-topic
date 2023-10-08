@@ -41,7 +41,10 @@ class VersionTagGroupsController < TagGroupsController
   end
 
   def make_sure_tag_created
-    params[:tag_names].concat(params[:parent_tag_name]).each do |tag|
+    version_tags = []
+    version_tags = version_tags.concat(params[:tag_names]) if params[:tag_names].present?
+    version_tags = version_tags.concat(params[:parent_tag_name]) if params[:parent_tag_name].present?
+    version_tags.each do |tag|
       VersionTag.find_or_create_by(name: tag)
     end
   end
