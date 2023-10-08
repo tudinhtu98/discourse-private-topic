@@ -8,6 +8,7 @@ class TagsController
   alias_method :org_upload, :upload
   alias_method :org_list_unused, :list_unused
   alias_method :org_destroy_unused, :destroy_unused
+  requires_login except: [:index, :show, :tag_feed, :search, :info, *show_methods, :search_all_tags]
 
   class << self
     alias_method :org_tag_counts_json, :tag_counts_json
@@ -43,6 +44,10 @@ class TagsController
 
   def destroy_unused
     core_destroy_unused
+  end
+
+  def search_all_tags
+    org_search
   end
 
   def core_index

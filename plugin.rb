@@ -55,6 +55,7 @@ after_initialize do
       get "/unused" => "version_tags#list_unused"
       delete "/unused" => "version_tags#destroy_unused"
     end
+    get "all_tags/filter/search" => "tags#search_all_tags"
     resources :node_tag_groups, constraints: StaffConstraint.new, except: [:edit]
     resources :version_tag_groups, constraints: StaffConstraint.new, except: [:edit]
   end
