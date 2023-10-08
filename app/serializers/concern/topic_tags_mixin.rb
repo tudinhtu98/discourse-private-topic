@@ -8,10 +8,15 @@ module TopicTagsMixin
   end
 
   def self.included(klass)
+    klass.attributes :merged_tags
     klass.attributes :tags
     klass.attributes :node_tags
     klass.attributes :version_tags
     klass.attributes :tags_descriptions
+  end
+
+  def merged_tags
+    all_tags
   end
 
   def tags
