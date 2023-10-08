@@ -25,6 +25,14 @@ class NodeTagGroupsController < TagGroupsController
     core_search
   end
 
+  def update
+    super
+  end
+
+  def destroy
+    super
+  end
+
   private
 
   def fetch_tag_group

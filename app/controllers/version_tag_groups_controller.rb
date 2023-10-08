@@ -21,6 +21,14 @@ class VersionTagGroupsController < TagGroupsController
     core_create
   end
 
+  def update
+    super
+  end
+
+  def destroy
+    super
+  end
+
   def search
     core_search
   end
