@@ -1,8 +1,25 @@
-/**
- * Links the path `/name` to a route named `name`. Named like this, a
- * route with the same name needs to be created in the `routes` directory.
- */
-
 export default function () {
-    // this.route('name', { path: '/name' })
+  const customTagTypes = ["version"];
+
+  customTagTypes.forEach((customTagType) => {
+    this.route(
+      `${customTagType}Tags`,
+      {
+        path: `/${customTagType}_tags`,
+        resetNamespace: true,
+      },
+      function () {
+        this.route("index", { path: "/" });
+      }
+    );
+
+    this.route(
+      `${customTagType}TagGroups`,
+      { path: `/${customTagType}_tag_groups`, resetNamespace: true },
+      function () {
+        this.route("edit", { path: "/:id" });
+        this.route("new");
+      }
+    );
+  });
 }
