@@ -30,12 +30,12 @@ export default MiniTagChooserComponent.extend({
     if (this.selectKit.options.minimum > 0) {
       return this.defaultItem(
         null,
-        I18n.t(`tagging.choose_for_${CUSTOME_TAG_TYPE}_required`, {
+        I18n.t(`${CUSTOME_TAG_TYPE}_tagging.choose_for_topic_required`, {
           count: this.selectKit.options.minimum,
         })
       );
     } else {
-      return this.defaultItem(null, I18n.t(`tagging.choose_for_${CUSTOME_TAG_TYPE}`));
+      return this.defaultItem(null, I18n.t(`${CUSTOME_TAG_TYPE}_tagging.choose_for_topic`));
     }
   },
 });

@@ -6,6 +6,7 @@ en:
       publish_it_now: "Publish it now"
     version_tagging:
       tags: "RMP Version Tags"
+      all_tags: "All RMP Version Tags"
       choose_for_topic: "RMP Version"
       choose_for_topic_required:
         one: "select at least %{count} RMP verion tag…"
@@ -16,6 +17,7 @@ en:
       upload: "Upload RMP Version Tags"
     node_tagging:
       tags: "ECAT Node Tags"
+      all_tags: "All ECAT Node Tags"
       choose_for_topic: "ECAT Node"
       choose_for_topic_required:
         one: "select at least %{count} ECAT node tag…"
