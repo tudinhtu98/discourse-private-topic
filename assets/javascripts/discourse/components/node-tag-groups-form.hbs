@@ -5,7 +5,7 @@
 
 <section class="group-tags-list">
   <label>{{i18n "tagging.groups.tags_label"}}</label><br />
-  <TagChooserVersion
+  <TagChooserNode
     @tags={{this.buffered.tag_names}}
     @everyTag={{true}}
     @unlimitedTagCount={{true}}
@@ -20,7 +20,7 @@
 <section class="parent-tag-section">
   <label>{{i18n "tagging.groups.parent_tag_label"}}</label>
   <div>
-    <TagChooserVersion
+    <TagChooserNode
       @tags={{this.buffered.parent_tag_name}}
       @everyTag={{true}}
       @excludeSynonyms={{true}}
