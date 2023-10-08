@@ -41,12 +41,16 @@ class VersionTagGroupsController < TagGroupsController
   end
 
   def make_sure_tag_created
-    version_tags = []
-    version_tags = version_tags.concat(params[:tag_names]) if params[:tag_names].present?
-    version_tags = version_tags.concat(params[:parent_tag_name]) if params[:parent_tag_name].present?
-    version_tags.each do |tag|
-      VersionTag.find_or_create_by(name: tag)
+    tags = []
+    data = params[:tag_group]
+    tags.concat(data[:tag_names]) if data[:tag_names].present?
+    tags.concat(data[:parent_tag_name]) if data[:parent_tag_name].present?
+    existed_tags = VersionTag.where(name: tags).pluck(:name)
+    missing_tags = tags - existed_tags
+    missing_node_tag_objs = missing_tags.map do |tag_name|
+      { name: tag_name, type_tag: 'VersionTag' }
     end
+    VersionTag.insert_all(missing_node_tag_objs) if missing_node_tag_objs.present?
   end
 
 end

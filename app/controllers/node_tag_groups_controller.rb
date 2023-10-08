@@ -41,12 +41,16 @@ class NodeTagGroupsController < TagGroupsController
   end
 
   def make_sure_tag_created
-    node_tags = []
-    node_tags = node_tags.concat(params[:tag_names]) if params[:tag_names].present?
-    node_tags = node_tags.concat(params[:parent_tag_name]) if params[:parent_tag_name].present?
-    node_tags.each do |tag|
-      NodeTag.find_or_create_by(name: tag)
+    tags = []
+    data = params[:tag_group]
+    tags.concat(data[:tag_names]) if data[:tag_names].present?
+    tags.concat(data[:parent_tag_name]) if data[:parent_tag_name].present?
+    existed_tags = NodeTag.where(name: tags).pluck(:name)
+    missing_tags = tags - existed_tags
+    missing_node_tag_objs = missing_tags.map do |tag_name|
+      { name: tag_name, type_tag: 'NodeTag' }
     end
+    NodeTag.insert_all(missing_node_tag_objs) if missing_node_tag_objs.present?
   end
 
 end
