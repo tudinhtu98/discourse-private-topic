@@ -1,5 +1,5 @@
 export default function () {
-  const customTagTypes = ["version"];
+  const customTagTypes = ["version", "node"];
 
   customTagTypes.forEach((customTagType) => {
     this.route(

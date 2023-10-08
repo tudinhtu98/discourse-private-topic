@@ -14,3 +14,13 @@ en:
         title: "RMP Version Tag Groups"
         back_btn: "Back to all RMP version tags"
       upload: "Upload RMP Version Tags"
+    node_tagging:
+      tags: "ECAT Node Tags"
+      choose_for_topic: "ECAT Node"
+      choose_for_topic_required:
+        one: "select at least %{count} ECAT node tag…"
+        other: "select at least %{count} ECAT node tags…"
+      groups:
+        title: "ECAT Node Tag Groups"
+        back_btn: "Back to all ECAT node tags"
+      upload: "Upload ECAT Node Tags"
