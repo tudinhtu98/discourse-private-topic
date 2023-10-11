@@ -2,7 +2,6 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 import I18n from "I18n";
 import { inject as service } from "@ember/service";
 import getURL from "discourse-common/lib/get-url";
-import { initSidebarState } from "discourse/plugins/chat/discourse/lib/init-sidebar-state";
 import TagSectionLink from "discourse/lib/sidebar/user/tags-section/tag-section-link";
 import PMTagSectionLink from "discourse/lib/sidebar/user/tags-section/pm-tag-section-link";
 
@@ -21,8 +20,6 @@ export default {
             switchButtonDefaultUrl = getURL("/version_tags");
           }
       );
-
-      initSidebarState(api, api.getCurrentUser());
     });
 
     withPluginApi("1.8.0", (api) => {
@@ -71,10 +68,6 @@ export default {
               if (container.isDestroyed) {
                 return;
               }
-              this.chatService = container.lookup("service:chat");
-              this.chatChannelsManager = container.lookup(
-                "service:chat-channels-manager"
-              );
               this.router = container.lookup("service:router");
             }
 
