@@ -1,9 +1,11 @@
 .type-topic-input {
-  display: flex;
-  margin-bottom: 8px;
+  margin: 0 0 8px 8px;
+  width: auto;
+  max-width: calc(50% - 4px);
+  flex-grow: 1;
 
   details {
-    flex-grow: 1;
+    width: 100%;
   }
 
   .select-kit-header {
