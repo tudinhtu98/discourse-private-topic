@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module SetupNewTags
   def setup_node_tags(node_tags)
     node_tags = node_tags[0...SiteSetting.max_node_tags_per_topic]
@@ -24,6 +25,10 @@ module SetupNewTags
   end
 
   def setup_tags(topic)
+    if @opts[:tags].blank?
+      @opts[:tags] = []
+    end
+
     if @opts[:node_tags].present?
       @opts[:node_tags] = setup_node_tags(@opts[:node_tags])
       @opts[:tags] = @opts[:tags] + @opts[:node_tags]
@@ -32,7 +37,7 @@ module SetupNewTags
       @opts[:version_tags] = setup_version_tags(@opts[:version_tags])
       @opts[:tags] = @opts[:tags] + @opts[:version_tags]
     end
-    
+
     super(topic)
   end
 end
