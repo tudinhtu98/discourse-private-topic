@@ -214,9 +214,9 @@
                     </div>
 
                     <MiniTagChooserNode
-                      @value={{composer.node_tags}}
-                      @onChange={{action (mut composer.node_tags)}}
-                      @options={{hash categoryId=composer.categoryId}}
+                      @value={{composer.model.node_tags}}
+                      @onChange={{action (mut composer.model.node_tags)}}
+                      @options={{hash categoryId=composer.model.categoryId}}
                     />
                   </div>
 
