@@ -1,9 +1,12 @@
 import MiniTagChooserComponent from "select-kit/components/mini-tag-chooser";
 import I18n from "I18n";
+import { setting } from "discourse/lib/computed";
 
 const CUSTOME_TAG_TYPE = "version";
 
 export default MiniTagChooserComponent.extend({
+  maxTagsPerTopic: setting("max_version_tags_per_topic"),
+
   search(filter) {
     const data = {
       q: filter || "",
@@ -35,7 +38,10 @@ export default MiniTagChooserComponent.extend({
         })
       );
     } else {
-      return this.defaultItem(null, I18n.t(`${CUSTOME_TAG_TYPE}_tagging.choose_for_topic`));
+      return this.defaultItem(
+        null,
+        I18n.t(`${CUSTOME_TAG_TYPE}_tagging.choose_for_topic`)
+      );
     }
   },
 });

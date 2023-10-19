@@ -7,9 +7,9 @@ plugins:
   min_trust_to_create_tag_node:
     default: "Admin"
     enum: "TrustLevelAndStaffSetting"
-  max_node_tags_per_topic:
-    default: 5
-    client: true
   max_version_tags_per_topic:
+    default: 1
+    client: true
+  max_node_tags_per_topic:
     default: 5
     client: true
