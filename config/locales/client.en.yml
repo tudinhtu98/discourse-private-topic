@@ -29,3 +29,9 @@ en:
     composer:
       error:
         version_tag_missing: "You must choose a RMP Version"
+    sidebar:
+      sections:
+        tags:
+          header_link_text: "Features"
+    tagging:
+      choose_for_topic: "Features"
