@@ -201,24 +201,43 @@
                     </div>
                   {{/if}}
 
-                  <div class="custom-tag-container">
-                    <div class="category-input">
-                      <MiniTagChooserVersion
-                        @value={{composer.model.version_tags}}
-                        @onChange={{action (mut composer.model.version_tags)}}
+                  {{#if this.composer.canEditTags}}
+                    <div class="custom-tag-container">
+                      <div class="category-input">
+                        <MiniTagChooserVersion
+                          @value={{composer.model.version_tags}}
+                          @onChange={{action (mut composer.model.version_tags)}}
+                          @options={{hash categoryId=composer.model.categoryId}}
+                        />
+                        <PopupInputTip
+                          @validation={{this.composer.versionTagValidation}}
+                        />
+                      </div>
+
+                      <MiniTagChooserNode
+                        @value={{composer.model.node_tags}}
+                        @onChange={{action (mut composer.model.node_tags)}}
                         @options={{hash categoryId=composer.model.categoryId}}
                       />
-                      <PopupInputTip
-                        @validation={{this.composer.versionTagValidation}}
-                      />
                     </div>
-
-                    <MiniTagChooserNode
-                      @value={{composer.model.node_tags}}
-                      @onChange={{action (mut composer.model.node_tags)}}
-                      @options={{hash categoryId=composer.model.categoryId}}
+                    <MiniTagChooser
+                      @class="full-width-tag"
+                      @value={{this.composer.model.tags}}
+                      @onChange={{action (mut this.composer.model.tags)}}
+                      @options={{hash
+                        disabled=this.composer.disableTagsChooser
+                        categoryId=this.composer.model.categoryId
+                        minimum=this.composer.model.minimumRequiredTags
+                      }}
                     />
-                  </div>
+                    <PluginOutlet
+                      @name="after-composer-tag-input"
+                      @outletArgs={{hash composer=this.composer.model}}
+                    />
+                    <PopupInputTip
+                      @validation={{this.composer.tagValidation}}
+                    />
+                  {{/if}}
 
                   <PluginOutlet
                     @name="after-title-and-category"
