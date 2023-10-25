@@ -32,6 +32,6 @@ en:
     sidebar:
       sections:
         tags:
-          header_link_text: "Features"
+          header_link_text: "Feature Tags"
     tagging:
       choose_for_topic: "Features"
