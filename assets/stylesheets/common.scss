@@ -16,6 +16,10 @@
 }
 
 .mobile-view {
+  .category-input {
+    z-index: 3;
+  }
+
   .type-topic-input {
     margin: 0 0 6px 6px;
   }
@@ -28,6 +32,7 @@
 .custom-tag-container {
   width: 100%;
   display: flex;
+  z-index: 2;
 
   .category-input {
     margin: 0 !important;
@@ -43,5 +48,9 @@
 .full-width-tag {
   margin-left: 0 !important;
   margin-bottom: 8px !important;
+  max-width: 100% !important;
+}
+
+.full-width {
   max-width: 100% !important;
 }

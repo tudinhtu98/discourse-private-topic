@@ -28,11 +28,13 @@ export default {
         showPrivateTopicChooser: computed(
           "action",
           "editingFirstPost",
+          "user",
           function () {
             // return [Composer.CREATE_TOPIC, Composer.EDIT].includes(action);
             return (
-              this.action === Composer.CREATE_TOPIC ||
-              (this.action === Composer.EDIT && this.editingFirstPost)
+              this.user.staff &&
+              (this.action === Composer.CREATE_TOPIC ||
+                (this.action === Composer.EDIT && this.editingFirstPost))
             );
           }
         ),

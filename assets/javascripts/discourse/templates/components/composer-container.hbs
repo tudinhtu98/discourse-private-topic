@@ -170,7 +170,13 @@
                   />
 
                   {{#if this.composer.model.showCategoryChooser}}
-                    <div class="category-input">
+                    <div
+                      class="category-input
+                        {{unless
+                          composer.model.showPrivateTopicChooser
+                          'full-width'
+                        }}"
+                    >
                       <CategoryChooser
                         @value={{this.composer.model.categoryId}}
                         @onChange={{this.composer.updateCategory}}
@@ -189,7 +195,6 @@
                       />
                     </div>
                   {{/if}}
-
                   {{#if composer.model.showPrivateTopicChooser}}
                     <div class="type-topic-input">
                       {{combo-box
