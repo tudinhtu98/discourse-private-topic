@@ -1,6 +1,6 @@
+import EmberObject, { computed } from "@ember/object";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import Composer from "discourse/models/composer";
-import EmberObject, { computed } from "@ember/object";
 import I18n from "I18n";
 
 const PLUGIN_ID = "discourse-private-public-topic";
@@ -59,7 +59,11 @@ export default {
               return true;
             }
 
-            if (!this.version_tags.length > 0) {
+            if (
+              (this.action === Composer.CREATE_TOPIC ||
+                this.action === Composer.EDIT) &&
+              !this.version_tags.length > 0
+            ) {
               return true;
             }
 
