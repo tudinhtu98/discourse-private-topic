@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class VersionTagGroupsController < TagGroupsController
+class CustomTags::NodeTagGroupsController < TagGroupsController
   before_action :make_sure_tag_created, only: [:update, :create]
   def tag_group_klass
-    VersionTagGroup
+    NodeTagGroup
   end
 
   def index
@@ -22,16 +22,16 @@ class VersionTagGroupsController < TagGroupsController
     core_create
   end
 
+  def search
+    core_search
+  end
+
   def update
     super
   end
 
   def destroy
     super
-  end
-
-  def search
-    core_search
   end
 
   private
@@ -45,12 +45,12 @@ class VersionTagGroupsController < TagGroupsController
     data = params[:tag_group]
     tags.concat(data[:tag_names]) if data[:tag_names].present?
     tags.concat(data[:parent_tag_name]) if data[:parent_tag_name].present?
-    existed_tags = VersionTag.where(name: tags).pluck(:name)
+    existed_tags = NodeTag.where(name: tags).pluck(:name)
     missing_tags = tags - existed_tags
     missing_node_tag_objs = missing_tags.map do |tag_name|
-      { name: tag_name, type_tag: 'VersionTag' }
+      { name: tag_name, type_tag: 'NodeTag' }
     end
-    VersionTag.insert_all(missing_node_tag_objs) if missing_node_tag_objs.present?
+    NodeTag.insert_all(missing_node_tag_objs) if missing_node_tag_objs.present?
   end
 
 end
