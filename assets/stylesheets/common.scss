@@ -26,6 +26,7 @@
 
   .custom-tag-container .category-input {
     max-width: calc(50% - 3px) !important;
+    margin: 0 0 6px 0 !important;
   }
 }
 
@@ -35,7 +36,7 @@
   z-index: 2;
 
   .category-input {
-    margin: 0 !important;
+    margin: 0 0 8px 0 !important;
     max-width: calc(50% - 5px) !important;
 
     .mini-tag-chooser {

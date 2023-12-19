@@ -1,10 +1,10 @@
-class NodeTagsController < TagsController
+class CustomTags::VersionTagsController < TagsController
   def self.tag_klass
-    NodeTag
+    VersionTag
   end
 
   def tag_group_klass
-    NodeTagGroup
+    VersionTagGroup
   end
 
   def index
